@@ -23,15 +23,19 @@ class RobotControllerConv(CmdVelPublisher, ImageSubscriber, object):
 
 
     def get_model(self):
+        nb_classes = 3
+        img_rows = 16
+        img_cols = 32
+        
         model = Sequential([
-            Convolution2D(32,3,3, border_mode='same', activation='relu', input_shape=(16, 32, 1)),
+            Convolution2D(32,3,3, border_mode='same', activation='relu', input_shape=(img_rows, img_cols, 1)),
             MaxPooling2D(),
             Convolution2D(64,3,3, border_mode='same', activation='relu'),
             MaxPooling2D(),
             Flatten(),
             Dense(1024, activation='relu'),
             Dropout(0.5),
-            Dense(3, activation='softmax')
+            Dense(nb_classes, activation='softmax')
             ])
         model.compile(Adam(), loss='categorical_crossentropy', metrics=['accuracy'])
         return model
