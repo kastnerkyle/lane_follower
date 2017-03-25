@@ -15,23 +15,29 @@ class CmdVelPublisher(object):
                       3:self.stopState}
         print "Initialized CmdVelPublisher"
 
+        rospy.on_shutdown(self.stop_robot)
+
+    def stop_robot(self):
+        self.state[3].__call__()
+        self.sendMessage()
+
     def forward(self):
         """ Sets the velocity to forward """
         print('forward')
-        self.linearVector  = Vector3(x=0.1, y=0.0, z=0.0)
+        self.linearVector  = Vector3(x=0.3, y=0.0, z=0.0)
         self.angularVector = Vector3(x=0.0, y=0.0, z=0.0)
 
     def leftTurn(self):
         print('leftTurn')
         """ Sets the velocity to turn left """
-        self.linearVector  = Vector3(x=0.1, y=0.0, z=0.0)
-        self.angularVector = Vector3(x=0.0, y=0.0, z=0.7)
+        self.linearVector  = Vector3(x=0.3, y=0.0, z=0.0)
+        self.angularVector = Vector3(x=0.0, y=0.0, z=1.5)
 
     def rightTurn(self):
         print('rightTurn')
         """ Sets the velocity to turn right """
-        self.linearVector  = Vector3(x=0.1, y=0.0, z=0.0)
-        self.angularVector = Vector3(x=0.0, y=0.0, z=-0.7)
+        self.linearVector  = Vector3(x=0.3, y=0.0, z=0.0)
+        self.angularVector = Vector3(x=0.0, y=0.0, z=-1.5)
 
     def stopState(self):
         """ Sets the velocity to stop """
